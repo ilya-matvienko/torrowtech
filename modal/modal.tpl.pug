@@ -1,0 +1,13 @@
+vui-modal(
+#modal="",
+(vuiClose)="onClosed()",
+(vuiDismiss)="onDismissed()",
+(vuiInit)="initModal()",
+[size]="size",
+[closeBtn]="isVisibleCloseBtn"
+)
+  div(slot="modal-header")
+    p {{ title }}
+  div(slot="modal-content", [innerHTML]="content", #contentRef="")
+
+vui-backdrop(*ngIf="opened$ | stream", (click)="backdropClose()")

@@ -1,0 +1,11 @@
+ng-container(*ngIf="hasDeal$ | stream; then detailTemp; else listTemp")
+
+ng-template(#listTemp="")
+  .history-sidebar
+    ng-container(*ngFor="let group of deals$ | stream")
+      p.text-caption.text-advanced.y-offset-sm-m(*ngIf="!isToday(group[0].close_quote_created_at) && group[0].status !== 'open'") {{ getDayWithMonth(group[0].close_quote_created_at) }}
+      .inner(*ngFor="let deal of group")
+        option-list.asset-item([deal]="deal", [assets]="optionModel.assets$ | stream", [quote]="optionModel.quote$ | stream", (select)="onSelect($event)")
+
+ng-template(#detailTemp="")
+  option-detail([deal]="optionModel.selectDeal$ | stream", [asset]="optionModel.currAsset$ | stream", [quote]="optionModel.quote$ | stream", (selectAsset)="onSelectAsset($event)", (detailClosed)="onCloseDetail()")

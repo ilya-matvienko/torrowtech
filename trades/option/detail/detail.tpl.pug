@@ -1,0 +1,25 @@
+vui-timeline(*ngIf="isOpenDeal(deal)", [start]="deal.open_quote_created_at", [finish]="deal.close_quote_created_at")
+.history-details
+  vui-timer([date]='deal.close_quote_created_at')
+  .icon(*ngIf="deal.iconUrl")
+    img([src]="deal.iconUrl")
+  .text-h5-bold.offset-row-sm-l {{ deal.name }}
+  .text-caption.text-secondary.offset-row-sm-l {{ 'ID ' + deal.id }},
+    span {{  getTimeframe(deal.option_type) }}
+  vui-button.offset-row-md-m(*ngIf="asset && asset.ric !== deal.ric", size="md-s", theme="light-grey", type="button", radial, (click)="assetSelected(deal)") {{ 'trades.detail_btn' | t }}
+  vui-grid
+    vui-row
+      vui-col.center(size="6")
+        p.text-body-bold {{ deal.amount | currency$ }}
+        p.text-caption.text-secondary.offset-row-md-s {{ 'trades.investment' | t }}
+        p.text-caption.text-secondary {{ 'trades.start' | t }}
+        p.text-caption.offset-row-md-s {{ deal.open_quote_created_at | date:'HH:mm:ss' }}
+        p.text-caption.text-secondary {{ 'trades.entry' | t }}
+        p.text-caption {{ deal.open_rate }}
+      vui-col.center(size="6")
+        p.text-body-bold([class.text-attention]="(getProfit(quote, deal) || deal.win) > 0") {{ getProfit(quote, deal) || deal.win | currency$ }}
+        p.text-caption.text-secondary.offset-row-md-s {{ 'trades.income' | t }}
+        p.text-caption.text-secondary  {{ 'trades.end' | t }}
+        p.text-caption.offset-row-md-s {{ deal.close_quote_created_at | date:'HH:mm:ss' }}
+        p.text-caption.text-secondary {{ 'trades.exit' | t }}
+        p.text-caption {{ deal.close_rate === 0 ? '' : deal.close_rate }}

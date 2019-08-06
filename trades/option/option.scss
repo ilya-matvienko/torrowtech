@@ -1,0 +1,32 @@
+.history-sidebar {
+  padding: 0 var(--offset-sm-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .inner {
+    width: 100%;
+  }
+
+  .asset-item {
+    width: 100%;
+    height: var(--height-md-l);
+    background-color: var(--color-background-advanced);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    padding: 12px;
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+    margin-bottom: var(--offset-sm-l);
+
+    &.win {
+      background-color: var(--color-text-blue);
+    }
+
+    &.lose {
+      background-color: var(--color-grey-60);
+    }
+  }
+}

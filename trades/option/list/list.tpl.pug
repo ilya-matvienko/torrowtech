@@ -1,0 +1,29 @@
+.container((click)="select(deal)")
+  .icon(*ngIf="getIcon(deal)")
+    img([src]="getIcon(deal)")
+  .inner
+    .asset
+      p.text-body.offset-row-sm-xs {{ deal.name }}
+        span  &nbsp;
+        span {{ deal.payment_rate + '%' }}
+      .time
+        vui-icon([ngClass]="deal.trend === 'call' ? 'up' : 'down'", [name]="deal.trend === 'call' ? 'deal-up' : 'deal-down'")
+        p.text-caption.text-secondary(*ngIf="dealIsOpen(deal)")
+          vui-timer([date]='deal.close_quote_created_at', [timeLabel]="{ minutes: 'trades.min' | t, seconds: 'trades.seconds' | t }")
+        p.text-caption.text-secondary(*ngIf="!dealIsOpen(deal)") {{ deal.close_quote_created_at | date:'HH:mm:ss' }}
+    .result
+      p.text-body.offset-row-sm-xs([class.text-attention]="(getProfit(quote, deal) || deal.win) > 0") {{ getProfit(quote, deal) || deal.win | currency$ }}
+      p.text-caption.text-secondary {{ deal.amount | currency$ }}
+  vui-timeline(*ngIf="dealIsOpen(deal)", [start]="deal.open_quote_created_at", [finish]="deal.close_quote_created_at")
+
+  // TODO: после добавления сокетов
+  //.asset-item.win
+  //  .icon
+  //  .wrapper
+  //    p.text-h6.text-white.offset-right-md-m + $ 100
+  //
+  //.asset-item.lose
+  //  .icon
+  //  .wrapper
+  //    p.text-h6.text-white.offset-right-md-m + $ 100
+  //
